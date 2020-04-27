@@ -1,0 +1,16 @@
+{% comment %} <option value="">---------</option>
+{% for city in cities %}
+<option value="{{ city.location_id}}">{{ city.location }}</option>
+{% endfor %} {% endcomment %}
+
+<p><label for="id_location">Location:<span class="required" style="color:red">*</span></label><br> <select name="location" id="id_location" required>
+  <option value="location" selected="">---------</option>
+{% for each in cities %} 
+  <option value="{{each.location}}">{{each.location}}</option>
+ {% endfor %}
+
+
+
+  
+
+</select></p>

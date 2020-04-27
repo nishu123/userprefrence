@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+ {% load static %}
+<html lang="en" dir="ltr">
+ <head>
+
+<meta charset="utf-8">
+
+<title></title>
+
+{% comment %} <link rel="stylesheet" href="{% static 'user.css'%}"> </head> {% endcomment %}
+
+ <body>
+ <h1> The User Preference list : </h1>
+
+ {% if MyPreference %}
+ <table>
+
+<thead>
+
+<th> eid </th>
+
+<th> country </th>
+
+<th> city </th>
+
+<th> location </th>
+
+</thead>
+
+
+{% for emp in MyPreference %}
+
+<tr>
+
+<td> {{emp.id}}</td>
+
+<td>{{emp.country}}</td>
+
+<td>{{emp.city}}</td>
+
+<td> {{emp.location}}</td>
+
+</tr>
+
+{% endfor %}
+
+ </table>
+{%else%}
+<p> No records found </p>
+ {% endif %}
+
+</body>
+ </html>

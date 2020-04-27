@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'user.css'%}">
+  </head>
+
+  <body>
+      <div class="container" align='center'>
+
+    <form action={% url 'user:addUser' %} id="personForm" data-cities-url="{% url 'user:ajax_load_cities' %}" novalidate method="post">
+      <h1>Welcome to Add user Preference</h1>
+      {% if messages %}
+            
+              {% for message in messages %}
+              {% if message.tags == 'success' %}
+                  <p class="messages alert-success" style="text-align: center;">{{ message }}</p>
+              {% else %}
+               <p class="messages alert-danger" style="text-align: center;">{{ message }}</p>
+               {% endif %}
+              {% endfor %}
+          
+              {% endif %}
+      <label for="quantity">Userid (between 1 and 5000):</label><br>
+<input type="number" id="id" name="id" min="1" max="5000">
+    {% comment %} {{ form.as_p }} {% endcomment %}
+    <p><label for="id_country">Country:<span class="required" style="color:red">*</span></label><br> <select name="country" id="id_country" required>
+  <option value="" selected="">---------</option>
+{% for each in PCountry %} 
+  <option value="{{eac.hcountry}}">{{each.country}}</option>
+ {% endfor %}
+
+
+
+  
+
+</select></p>
+  <p><label for="id_city">City:<span class="required" style="color:red">*</span></label><br> <select name="city" id="id_city" required>
+  <option value="" selected="">---------</option>
+{% for each in PCity %} 
+  <option value="{{each.city_id}}">{{each.city}}</option>
+ {% endfor %}
+
+
+
+  
+
+</select></p>
+<p><label for="id_location">Location:<span class="required" style="color:red">*</span></label><br> <select name="location" id="id_location" required>
+  <option value="location" selected="">---------</option>
+{% for each in PLocation %} 
+  <option value="{{each.location}}">{{each.location}}</option>
+ {% endfor %}
+
+
+
+  
+
+</select></p>
+    {% csrf_token %}
+    <input type="submit" class="btn-primary btn-lg" value="SUBMIT" />
+
+</form>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+ 
+    $("#id_city").change(function () {
+      var url = $("#personForm").attr("data-cities-url");  // get the url of the `load_cities` view
+      var cityId = $(this).val();  // get the selected country ID from the HTML input
+
+      $.ajax({                       // initialize an AJAX request
+        url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+        data: {
+          'city': cityId       // add the country id to the GET parameters
+        },
+        success: function (data) {   // `data` is the return of the `load_cities` view function
+          $("#id_location").html(data);  // replace the contents of the city input with the data that came from the server
+        }
+      });
+
+    });
+  </script>
+
+</div>
+  </body>
+
+</html>
+ 
